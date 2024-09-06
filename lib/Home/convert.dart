@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
+import 'package:bitgold/Tracker/trackermain.dart';
 
 void main() {
   runApp(MyApp());
@@ -91,6 +92,12 @@ class _ConvertScreenState extends State<ConvertScreen> {
           MaterialPageRoute(builder: (context) => HomePage()),
         );
       }
+      if (index == 2) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => TrackerMainScreen()),
+        );
+      }
       // Handle other navigation cases if needed
     });
   }
@@ -102,8 +109,8 @@ class _ConvertScreenState extends State<ConvertScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(120.0), // Adjusted height to fit content
         child: AppBar(
-          surfaceTintColor: Colors.white,
-          backgroundColor: Colors.white,
+          surfaceTintColor: Color(0xFFFAFAFA),
+          backgroundColor: Color(0xFFFAFAFA),
           title: Text(
             'Convert',
             style: TextStyle(
@@ -138,7 +145,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 0  ),
+                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
                   padding: EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     color: Color(0xFFD7D9E4), // Background container color

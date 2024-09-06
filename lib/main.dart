@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Home.dart';
+import 'Home/Home.dart';
 
 void main() {
   runApp(BitgoldApp());

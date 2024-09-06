@@ -8,7 +8,7 @@ class ViewAllScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFFAFAFA),
         title: Text('In Focus List'),
         centerTitle: true,
         actions: [
