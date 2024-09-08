@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Home/Home.dart';
+import 'Tracker/trackermain.dart';
 
 void main() {
   runApp(BitgoldApp());

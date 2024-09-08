@@ -5,6 +5,7 @@ import 'convert.dart';
 import 'focuslist.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:bitgold/Tracker/trackermain.dart';
+import 'package:bitgold/Custombottomnavigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -92,26 +93,6 @@ class _HomePageState extends State<HomePage> {
     });
 
     // Handle navigation or other actions based on the selected index
-    switch (index) {
-      case 0:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-        break;
-      case 1:
-        // Handle Add User Navigation or functionality
-        break;
-      case 2:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => TrackerMainScreen()),
-        );
-        break;
-      case 3:
-        // Handle Profile Navigation or functionality
-        break;
-    }
   }
 
   @override
@@ -150,29 +131,10 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           body: _buildBody(),
-          bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar: CustomBottomNavigationBar(
             currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_add),
-                label: 'Add User',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.track_changes),
-                label: 'Tracker',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-            ],
-            selectedItemColor: Colors.amber,
-            unselectedItemColor: Colors.grey,
+            onTap:
+                _onItemTapped, // Handle item taps and pass to CustomBottomNavigationBar
           ),
         ),
         Positioned(

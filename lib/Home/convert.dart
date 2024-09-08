@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'package:bitgold/Tracker/trackermain.dart';
+import 'package:bitgold/Custombottomnavigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,62 +12,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-        primaryColor: Colors.white,
-        scaffoldBackgroundColor:
-            Colors.white, // Ensure Scaffold background is pure white
-        appBarTheme: AppBarTheme(
-          color: const Color.fromARGB(
-              255, 255, 255, 255), // AppBar background color
-          iconTheme: IconThemeData(color: Colors.black),
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        cardTheme: CardTheme(
-          color: Colors.white, // Card background color
-          elevation: 4, // Optional: adds shadow
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-                color: Colors.grey.shade300, width: 1), // Light grey border
-            borderRadius: BorderRadius.circular(8), // Optional: rounded corners
-          ),
-        ),
-        iconTheme: IconThemeData(color: Colors.black),
-        textTheme: TextTheme(
-          bodyLarge: TextStyle(color: Colors.black),
-          bodyMedium: TextStyle(color: Colors.black),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.white, // Background color for text fields
-          labelStyle: TextStyle(color: Colors.black),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.black,
-            backgroundColor: Colors.grey.shade400,
-          ),
-        ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Colors.white, // Background for BottomNavigationBar
-          selectedItemColor: Colors.amber, // Selected item color
-          unselectedItemColor: Colors.grey,
-          showUnselectedLabels: true,
-        ),
-      ),
       home: ConvertScreen(),
     );
   }
@@ -86,18 +31,6 @@ class _ConvertScreenState extends State<ConvertScreen> {
     setState(() {
       _selectedIndex = index;
 
-      if (index == 0) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-      }
-      if (index == 2) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => TrackerMainScreen()),
-        );
-      }
       // Handle other navigation cases if needed
     });
   }
@@ -146,7 +79,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
               children: [
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-                  padding: EdgeInsets.all(2),
+                  padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     color: Color(0xFFD7D9E4), // Background container color
                     borderRadius: BorderRadius.circular(10),
@@ -221,29 +154,10 @@ class _ConvertScreenState extends State<ConvertScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_add),
-            label: 'Add User',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.track_changes),
-            label: 'Tracker',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.grey,
+        onTap:
+            _onItemTapped, // Handle item taps and pass to CustomBottomNavigationBar
       ),
     );
   }

@@ -2,8 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class ViewAllScreen extends StatelessWidget {
+import 'package:bitgold/Custombottomnavigation.dart';
+
+class ViewAllScreen extends StatefulWidget {
   @override
+  _ViewAllScreenState createState() => _ViewAllScreenState();
+}
+
+class _ViewAllScreenState extends State<ViewAllScreen> {
+  int _selectedIndex = 0; // Default to the third tab (Tracker)
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -20,15 +34,10 @@ class ViewAllScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_add), label: 'Add User'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.track_changes), label: 'Tracker'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap:
+            _onItemTapped, // Handle item taps and pass to CustomBottomNavigationBar
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),

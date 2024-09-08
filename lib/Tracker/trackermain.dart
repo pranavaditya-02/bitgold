@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:bitgold/Home/Home.dart';
 import 'package:draggable_bottom_sheet/draggable_bottom_sheet.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:bitgold/Tracker/trackdetails.dart';
+import 'package:bitgold/Custombottomnavigation.dart';
 
 class TrackerMainScreen extends StatelessWidget {
   @override
@@ -211,6 +213,7 @@ class TrackerMainScreen extends StatelessWidget {
             right: 0,
             bottom: 0,
             child: DraggableBottomSheet(
+              barrierColor: Colors.white,
               minExtent: 300,
               useSafeArea: false,
               curve: Curves.easeIn,
@@ -228,22 +231,12 @@ class TrackerMainScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // Set current index to the Tracker tab
-        onTap: (index) {
-          // Handle bottom navigation bar tap
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_add), label: 'Add User'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart), label: 'Tracker'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.grey,
-      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: 2,
+          onTap: (index) {
+            // Handle navigation bar item taps
+            switch (index) {}
+          }),
     );
   }
 
@@ -421,17 +414,15 @@ class TrackerMainScreen extends StatelessWidget {
               itemCount: itemCount,
               itemBuilder: (context, index) {
                 return _buildTransactionCard(
-                  'Saravanan S',
-                  index.isEven ? '₹43,000.00' : '₹50,000.00',
-                  index.isEven ? 'Payment Done' : 'Payment Overdue',
-                  index.isEven ? Colors.green : Colors.red,
-                  '2 months',
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZQ-58A9-OeR5XnI472drONTCTHxcpWhCtAoVCSluGAoFn89Vp', // Replace with actual profile image URL
-                  index.isEven
-                      ? Icons.check_circle
-                      : Icons
-                          .warning, // Use different icons for different statuses
-                );
+                    'Saravanan S',
+                    index.isEven ? '₹43,000.00' : '₹50,000.00',
+                    index.isEven ? 'Payment Done' : 'Payment Overdue',
+                    index.isEven ? Colors.green : Colors.red,
+                    '2 months',
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZQ-58A9-OeR5XnI472drONTCTHxcpWhCtAoVCSluGAoFn89Vp', // Replace with actual profile image URL
+                    index.isEven ? Icons.check_circle : Icons.warning,
+                    context // Use different icons for different statuses
+                    );
               },
             ),
           ),
@@ -446,89 +437,96 @@ class TrackerMainScreen extends StatelessWidget {
     String status,
     Color statusColor,
     String time,
-    String imageUrl, // Added for profile image
-    IconData statusIcon, // Added for status icon
+    String imageUrl,
+    IconData statusIcon,
+    BuildContext context, // Add the BuildContext parameter
   ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 16.0, vertical: 1.0), // Adds space around the card
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(
-            // Added border property here
-            color: Colors.grey[300]!, // Border color
-            width: 1.0, // Border width
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 1.0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    TrackDetailScreen()), // Navigate to TrackDetails
+          );
+        },
+        child: Card(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(
+              color: Colors.grey[300]!,
+              width: 1.0,
+            ),
           ),
-        ),
-        elevation: 1,
-        child: Padding(
-          padding: const EdgeInsets.all(
-              8.0), // Add padding for better alignment inside the card
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(imageUrl), // Use real image URL
-                radius: 35, // Size of the avatar
-              ),
-              SizedBox(width: 10), // Space between avatar and text
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          elevation: 1,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(imageUrl),
+                  radius: 35,
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            statusIcon,
+                            color: statusColor,
+                            size: 16,
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            status,
+                            style: TextStyle(
+                              color: statusColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      name,
+                      amount,
                       style: TextStyle(
-                        fontSize: 16,
+                        color: statusColor,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 4), // Space between name and status
-                    Row(
-                      children: [
-                        Icon(
-                          statusIcon,
-                          color: statusColor,
-                          size: 16,
-                        ),
-                        SizedBox(
-                            width: 4), // Space between icon and status text
-                        Text(
-                          status,
-                          style: TextStyle(
-                            color: statusColor,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 4),
+                    Text(
+                      time,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(width: 10), // Space between text and trailing
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    amount,
-                    style: TextStyle(
-                      color: statusColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 4), // Space between amount and time
-                  Text(
-                    time,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
