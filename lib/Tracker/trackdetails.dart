@@ -172,7 +172,7 @@ class TrackDetailScreen extends StatelessWidget {
                 '₹75,000',
                 '24 Month Tenure',
                 'December 12th 2024',
-                'assets/gold.png',
+                'assets/goldloan.png',
               ),
               SizedBox(height: 16),
               _buildLoanCard(
@@ -180,7 +180,7 @@ class TrackDetailScreen extends StatelessWidget {
                 '₹1,75,000',
                 '18 Month Tenure',
                 'December 12th 2024',
-                'assets/gold.png',
+                'assets/silverloan.png',
               ),
             ],
           ),
@@ -235,6 +235,19 @@ class TrackDetailScreen extends StatelessWidget {
 
   Widget _buildLoanCard(String loanType, String amount, String tenure,
       String dueDate, String imagePath) {
+    // Determine color based on loan type
+    Color topBackgroundColor;
+    if (loanType.toLowerCase() == 'gold loan') {
+      topBackgroundColor = Color.fromARGB(255, 241, 204, 198); // Gold color
+      imagePath = 'assets/goldloan.png'; // Gold-specific image
+    } else if (loanType.toLowerCase() == 'silver loan') {
+      topBackgroundColor = Color.fromARGB(255, 255, 202, 223); // Silver color
+      imagePath = 'assets/silverloan.png'; // Silver-specific image
+    } else {
+      topBackgroundColor = Color(0xFFF7E0DC); // Default light pink color
+      imagePath = imagePath; // Use passed image path
+    }
+
     return Container(
       // Adds margin around the card
       margin: EdgeInsets.all(0),
@@ -252,11 +265,11 @@ class TrackDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Upper section (colored background)
+          // Upper section (dynamic colored background)
           Container(
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Color(0xFFF7E0DC), // Light pinkish color for top section
+              color: topBackgroundColor, // Dynamic background color
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
@@ -268,6 +281,7 @@ class TrackDetailScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 10),
                     Text(
                       loanType.toUpperCase(), // Loan type
                       style: TextStyle(
@@ -276,7 +290,7 @@ class TrackDetailScreen extends StatelessWidget {
                         color: Color(0xFFD74628), // Red text color
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 20),
                     Text(
                       'Current Active Plan',
                       style: TextStyle(color: Colors.grey),
@@ -297,8 +311,9 @@ class TrackDetailScreen extends StatelessWidget {
                 Spacer(), // Pushes the image to the right
                 Image.asset(
                   imagePath,
-                  width: 80,
-                  height: 80,
+                  width: 160,
+                  height: 150,
+                  fit: BoxFit.contain, // Ensure the image scales correctly
                 ),
               ],
             ),
@@ -325,19 +340,35 @@ class TrackDetailScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Color.fromARGB(255, 255, 255, 255), // Button color
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
+                FittedBox(
+                  fit: BoxFit
+                      .scaleDown, // Ensures the button scales to fit within the available space
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white, // Button color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8), // Rounded edges
+                      ),
+                      side: BorderSide(
+                          color: Colors.grey), // Border for the button
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12), // Adjust padding to control size
+                      minimumSize:
+                          Size(100, 40), // Minimum size (width and height)
+                    ),
+                    onPressed: () {
+                      // Handle view all loans
+                    },
+                    child: Text(
+                      'View All loans >',
+                      style: TextStyle(
+                        color: Colors.black, // Button text color
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  onPressed: () {
-                    // Handle view all loans
-                  },
-                  child: Text('View All loans >'),
-                ),
+                )
               ],
             ),
           ),
