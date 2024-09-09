@@ -236,10 +236,11 @@ class TrackDetailScreen extends StatelessWidget {
   Widget _buildLoanCard(String loanType, String amount, String tenure,
       String dueDate, String imagePath) {
     return Container(
-      padding: EdgeInsets.all(16),
+      // Adds margin around the card
+      margin: EdgeInsets.all(0),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        color: Colors.white, // Background color for the entire card
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
@@ -248,44 +249,97 @@ class TrackDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(imagePath, width: 80, height: 80),
-          SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                loanType,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          // Upper section (colored background)
+          Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Color(0xFFF7E0DC), // Light pinkish color for top section
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
               ),
-              SizedBox(height: 4),
-              Text('Current Active Plan'),
-              SizedBox(height: 4),
-              Text(
-                amount,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 4),
-              Text(tenure),
-              SizedBox(height: 16),
-              Text(
-                'Next due date',
-                style: TextStyle(color: Colors.grey),
-              ),
-              Text(
-                dueDate,
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-            ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      loanType.toUpperCase(), // Loan type
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFD74628), // Red text color
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Current Active Plan',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      amount,
+                      style: TextStyle(
+                        fontSize: 24, // Larger font for the amount
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(tenure),
+                  ],
+                ),
+                Spacer(), // Pushes the image to the right
+                Image.asset(
+                  imagePath,
+                  width: 80,
+                  height: 80,
+                ),
+              ],
+            ),
           ),
-          Spacer(),
-          TextButton(
-            onPressed: () {
-              // Handle view all loans
-            },
-            child: Text('View All loans >'),
+          // Lower section (white background)
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Next due date',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    Text(
+                      dueDate,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Color.fromARGB(255, 255, 255, 255), // Button color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Handle view all loans
+                  },
+                  child: Text('View All loans >'),
+                ),
+              ],
+            ),
           ),
         ],
       ),
