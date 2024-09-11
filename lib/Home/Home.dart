@@ -31,51 +31,201 @@ class LineChartSample extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-        child: LineChart(
-          LineChartData(
-            gridData: const FlGridData(show: true),
-            titlesData: const FlTitlesData(show: true),
-            borderData: FlBorderData(show: true),
-            lineBarsData: [
-              LineChartBarData(
-                spots: [
-                  const FlSpot(0, 1),
-                  const FlSpot(1, 3),
-                  const FlSpot(2, 10),
-                  const FlSpot(3, 7),
-                  const FlSpot(4, 12),
-                  const FlSpot(5, 13),
-                  const FlSpot(6, 17),
-                ],
-                isCurved: true,
-                color: Colors.blue,
-                barWidth: 4,
-                isStrokeCapRound: true,
-                belowBarData: BarAreaData(show: false),
+        padding: const EdgeInsets.all(8.0), // Adjust padding as needed
+        child: Column(
+          children: [
+            Expanded(
+              child: LineChart(
+                LineChartData(
+                  gridData: FlGridData(
+                    show: true, // Show grid lines
+                    drawVerticalLine: false, // Hide vertical grid lines
+                    getDrawingHorizontalLine: (value) {
+                      if (value % 5 == 0) {
+                        return FlLine(
+                          color: Colors.grey,
+                          strokeWidth: 0.5,
+                          dashArray: [5, 5], // Dashed line
+                        );
+                      } else {
+                        return FlLine(
+                          color:
+                              Colors.transparent, // Hide other horizontal lines
+                          strokeWidth: 0,
+                        );
+                      }
+                    },
+                    getDrawingVerticalLine: (value) {
+                      return FlLine(
+                        color: Colors
+                            .transparent, // Hide vertical lines completely
+                        strokeWidth: 0,
+                      );
+                    },
+                  ),
+                  titlesData: FlTitlesData(
+                    show: true,
+                    topTitles: AxisTitles(
+                      sideTitles:
+                          SideTitles(showTitles: false), // Hide top titles
+                    ),
+                    rightTitles: AxisTitles(
+                      sideTitles:
+                          SideTitles(showTitles: false), // Hide right titles
+                    ),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 40,
+                        interval: 1,
+                        getTitlesWidget: (value, meta) {
+                          const months = [
+                            'Jan',
+                            'Feb',
+                            'Mar',
+                            'Apr',
+                            'May',
+                            'Jun',
+                            'Jul'
+                          ];
+                          if (value.toInt() >= 0 &&
+                              value.toInt() < months.length) {
+                            return Text(
+                              months[value.toInt()],
+                              style: const TextStyle(color: Colors.black),
+                            );
+                          }
+                          return const Text('');
+                        },
+                      ),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 40,
+                        interval: 5,
+                        getTitlesWidget: (value, meta) {
+                          return Text(
+                            '${value.toInt()}k',
+                            style: const TextStyle(color: Colors.black),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  borderData: FlBorderData(
+                    show: false,
+                    border: const Border(
+                      left: BorderSide(color: Colors.black, width: 1),
+                      bottom: BorderSide(color: Colors.black, width: 1),
+                    ),
+                  ),
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: [
+                        const FlSpot(0, 5),
+                        const FlSpot(1, 8),
+                        const FlSpot(2, 10),
+                        const FlSpot(3, 22),
+                        const FlSpot(4, 15),
+                        const FlSpot(5, 12),
+                        const FlSpot(6, 10),
+                      ],
+                      isCurved: true,
+                      color: Colors.green,
+                      barWidth: 4,
+                      isStrokeCapRound: true,
+                      belowBarData: BarAreaData(show: false),
+                    ),
+                    LineChartBarData(
+                      spots: [
+                        const FlSpot(0, 2),
+                        const FlSpot(1, 3),
+                        const FlSpot(2, 8),
+                        const FlSpot(3, 15),
+                        const FlSpot(4, 20),
+                        const FlSpot(5, 18),
+                        const FlSpot(6, 17),
+                      ],
+                      isCurved: true,
+                      color: Colors.orange,
+                      barWidth: 4,
+                      isStrokeCapRound: true,
+                      belowBarData: BarAreaData(show: false),
+                    ),
+                    LineChartBarData(
+                      spots: [
+                        const FlSpot(0, 7),
+                        const FlSpot(1, 12),
+                        const FlSpot(2, 15),
+                        const FlSpot(3, 25),
+                        const FlSpot(4, 17),
+                        const FlSpot(5, 19),
+                        const FlSpot(6, 12),
+                      ],
+                      isCurved: true,
+                      color: Colors.blue,
+                      barWidth: 4,
+                      isStrokeCapRound: true,
+                      belowBarData: BarAreaData(show: false),
+                      dashArray: [5, 5], // Dashed line for Amount Spent
+                    ),
+                  ],
+                  minY: 0,
+                  maxY: 30,
+                ),
               ),
-              LineChartBarData(
-                spots: [
-                  const FlSpot(0, 5),
-                  const FlSpot(1, 2),
-                  const FlSpot(2, 0),
-                  const FlSpot(3, 4),
-                  const FlSpot(4, 10),
-                  const FlSpot(5, 12),
-                  const FlSpot(6, 15),
+            ),
+            // Legend
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween, // Adjusted alignment
+                children: [
+                  Expanded(
+                      child: _LegendBox(
+                          color: Colors.green, label: 'Actual Interest')),
+                  Expanded(
+                      child: _LegendBox(
+                          color: Colors.orange, label: 'Received Interest')),
+                  Expanded(
+                      child: _LegendBox(
+                          color: Colors.blue, label: 'Amount Spent')),
                 ],
-                isCurved: true,
-                color: Colors.black,
-                barWidth: 4,
-                isStrokeCapRound: true,
-                belowBarData: BarAreaData(show: false),
               ),
-            ],
-            minY: 0,
-            maxY: 20,
-          ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+}
+
+class _LegendBox extends StatelessWidget {
+  final Color color;
+  final String label;
+
+  const _LegendBox({required this.color, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 12, // Reduced width
+          height: 12, // Reduced height
+          color: color,
+        ),
+        SizedBox(width: 4), // Reduced spacing
+        Flexible(
+          child: Text(
+            label,
+            overflow: TextOverflow.ellipsis, // Prevents overflow
+            style: const TextStyle(fontSize: 12), // Adjust text size if needed
+          ),
+        ),
+      ],
     );
   }
 }
@@ -674,7 +824,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           initiallyExpanded: _isTotalStatisticsExpanded,
-          // enabled: _isTotalStatisticsExpanded,
           onExpansionChanged: (expanded) {
             setState(() {
               _isTotalStatisticsExpanded = expanded;
