@@ -5,20 +5,7 @@ import 'convert.dart';
 import 'focuslist.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:bitgold/Custombottomnavigation.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
-}
+import 'package:bitgold/setting.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -274,9 +261,18 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            actions: const [
-              Icon(Icons.settings, color: Colors.black),
-              SizedBox(width: 16),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.settings, color: Colors.black),
+                onPressed: () {
+                  // Navigate to another screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()),
+                  );
+                },
+              ),
+              SizedBox(width: 14), // Spacing between icon and edge
             ],
           ),
           body: _buildBody(),

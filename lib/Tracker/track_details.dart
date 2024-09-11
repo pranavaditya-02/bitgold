@@ -1,3 +1,4 @@
+import 'package:bitgold/Loan/create_loan.dart';
 import 'package:flutter/material.dart';
 import 'package:bitgold/Custombottomnavigation.dart';
 import 'package:bitgold/Tracker/gold_loan_details.dart';
@@ -144,8 +145,12 @@ class TrackDetailScreen extends StatelessWidget {
                                         height: 40, // Adjusted height as needed
                                         child: OutlinedButton(
                                           onPressed: () {
-                                            
-                                            // Add your button press logic here
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CreateLoanScreen()),
+                                            );
                                           },
                                           style: OutlinedButton.styleFrom(
                                             side: BorderSide(

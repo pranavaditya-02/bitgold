@@ -112,113 +112,122 @@ class LoanCard extends StatelessWidget {
       },
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(vertical: 16.0),
+        margin: EdgeInsets.symmetric(vertical: 8.0),
         elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
+        child: Container(
+          height: 175, // Increased height to 175
+          padding: const EdgeInsets.all(12), // Adjust padding
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              // Loan image with increased size
+              Image.asset(
+                'assets/goldloan.png',
+                width: 85, // Image size
+                height: 85,
+              ),
+              SizedBox(width: 10),
+              // Loan amount on the left
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      loanAmount,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber[800],
+                      ),
+                    ),
+                    // Add some spacing
+                    SizedBox(height: 6),
+                    // Progress bar
+                    CustomProgressSlider(
+                      progress: progress,
+                      loanStatus: loanStatus,
+                      activeColor: _getProgressColor(),
+                      inactiveColor: Colors.grey.shade200,
+                    ),
+                  ],
+                ),
+              ),
+              // Loan status, due date, and month aligned to the right
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Image.asset(
-                    'assets/goldloan.png', // Ensure this path is correct
-                    width: 70,
-                    height: 70,
-                  ),
-                  SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
+                      Icon(Icons.access_time, color: _getStatusColor()),
+                      SizedBox(width: 4),
                       Text(
-                        loanAmount,
+                        loanStatus,
                         style: TextStyle(
-                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.amber[800],
+                          color: _getStatusColor(),
                         ),
                       ),
                     ],
                   ),
-                  // Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.access_time,
-                            color: _getStatusColor(),
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            loanStatus,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: _getStatusColor(),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'Due : $dueDate',
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        '$completedMonths / $totalMonths Month',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              CustomProgressSlider(
-                progress: progress,
-                loanStatus: loanStatus,
-                activeColor: _getProgressColor(),
-                inactiveColor: Colors.grey.shade200,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TransactionDetailsScreen(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _getButtonColor(),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                  SizedBox(height: 8),
+                  Text(
+                    'Due: $dueDate',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('View Logs', style: TextStyle(color: Colors.white)),
-                      SizedBox(width: 8),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: Colors.white,
-                      ),
-                    ],
+                  SizedBox(height: 8),
+                  Text(
+                    '$completedMonths / $totalMonths Month',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
+                  SizedBox(height: 16),
+                  // View Logs button
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TransactionDetailsScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _getButtonColor(),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 6, // Reduced padding for smaller button
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'View Logs',
+                          style: TextStyle(color: Colors.white, fontSize: 12),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(width: 2),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 12,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -264,7 +273,7 @@ class CustomProgressSlider extends StatelessWidget {
     this.sliderHeight = 6.0,
     this.activeColor = Colors.green,
     this.inactiveColor = Colors.grey,
-    this.sliderWidth = 150.0,
+    this.sliderWidth = 120.0,
   });
 
   @override

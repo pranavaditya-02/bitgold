@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Home/Home.dart';
+import 'package:bitgold/Tracker/track_details.dart';
+import 'create_user.dart';
 
 class SearchUserScreen extends StatefulWidget {
   @override
@@ -11,21 +14,22 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
   List<String> users = []; // Placeholder for user data after search
 
   void searchUsers() {
+    FocusScope.of(context).unfocus(); // Dismiss the keyboard
     setState(() {
       isSearched = true;
-      users = ['Kumar s', 'Kumar s']; // Replace this with your search logic
+      users = List<String>.generate(
+          20, (index) => 'User $index'); // Dynamically generate 20 users
     });
   }
 
   void createUser() {
-    // Navigate to create user screen
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) =>
-    //         CreateUserScreen(), // Replace with your actual create user screen
-    //   ),
-    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            CreateUserScreen(), // Replace with your actual create user screen
+      ),
+    );
   }
 
   @override
@@ -34,12 +38,16 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+         backgroundColor: Color.fromARGB(255, 250, 250, 250),
+        surfaceTintColor: Color.fromARGB(255, 250, 250, 250),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+          icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
           },
         ),
         title: Text(
@@ -132,7 +140,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
           if (isSearched)
             DraggableScrollableSheet(
               initialChildSize: 0.3, // Initial height of the sheet
-              minChildSize: 0.1, // Minimum height when collapsed
+              minChildSize: 0.3, // Minimum height when collapsed
               maxChildSize: 0.7, // Maximum height when expanded
               builder:
                   (BuildContext context, ScrollController scrollController) {
@@ -150,45 +158,84 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                         blurRadius: 5,
                       ),
                     ],
-                    border: Border.all(
-                      color: Colors.grey[300]!, // Border color
-                      width: 1.0, // Border width
-                    ),
                   ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          "User you may search",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: Text(
+                            "User you may search",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          controller:
-                              scrollController, // Attach scrollController
-                          itemCount: users.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZQ-58A9-OeR5XnI472drONTCTHxcpWhCtAoVCSluGAoFn89Vp'), // Replace with actual image
-                              ),
-                              title: Text(users[index]),
-                              subtitle: Text("0000869"), // Placeholder data
-                              trailing: TextButton(
-                                onPressed: () {
-                                  // Navigate to user's details or perform action
-                                },
-                                child: Text("View"),
-                              ),
-                            );
-                          },
+                        Expanded(
+                          child: ListView.builder(
+                            controller: scrollController,
+                            itemCount: users.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical:
+                                        8.0), // Adds some spacing between list items
+                                decoration: BoxDecoration(
+                                  color: Colors
+                                      .white, // Background color of the box
+                                  borderRadius: BorderRadius.circular(
+                                      12), // Rounded corners
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black
+                                          .withOpacity(0.1), // Subtle shadow
+                                      spreadRadius: 1,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 2), // Shadow position
+                                    ),
+                                  ],
+                                  border: Border.all(
+                                    color: Colors.grey[300]!, // Border color
+                                    width: 1.0, // Border width
+                                  ),
+                                ),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 8),
+                                  leading: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 6, vertical: 0),
+                                    child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZQ-58A9-OeR5XnI472drONTCTHxcpWhCtAoVCSluGAoFn89Vp',
+                                      ),
+                                      radius: 30,
+                                    ),
+                                  ),
+                                  title: Text(users[index]),
+                                  subtitle: Text("0000869"), // Placeholder data
+                                  trailing: TextButton(
+                                    onPressed: () {
+                                      // Navigate to TrackDetailsPage
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              TrackDetailScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: Text("View"),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
