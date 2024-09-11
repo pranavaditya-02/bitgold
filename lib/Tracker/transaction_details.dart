@@ -13,6 +13,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 250, 250, 250),
+        surfaceTintColor: Color.fromARGB(255, 250, 250, 250),
         elevation: 0,
         title: Text(
           "Gold Loan Details",
@@ -41,9 +42,8 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
               _buildStep("₹ 8,000", "No Transaction Done", "May 12th 2024",
                   isCompleted: false),
               _buildDottedLine(),
-              _buildStep(
-                  "₹ 10,000 +2000", "No Transaction Done", "Apr 12th 2024",
-                  isCompleted: false),
+              _buildStep("₹ 10,000", "No Transaction Done", "Apr 12th 2024",
+                  isCompleted: false, isSpecialAmount: true),
               _buildDottedLine(),
               _buildStep(
                   "₹ 10,000", "Transaction from SBI Account", "Mar 12th 2024",
@@ -100,30 +100,59 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
     );
   }
 
-  // Steps for the transaction details
+  // Updated steps for the transaction details
   Widget _buildStep(String amount, String status, String date,
-      {bool isCompleted = false}) {
+      {bool isCompleted = false, bool isSpecialAmount = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: isCompleted ? Colors.green : Colors.blue,
-            size: 24,
+          // Padding applied to the Column containing the Icon and Dotted Line
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 30.0), // Moves stepper to the right
+            child: Column(
+              children: [
+                Icon(
+                  isCompleted
+                      ? Icons.check_circle
+                      : Icons.radio_button_unchecked,
+                  color: isCompleted ? Colors.green : Colors.blue,
+                  size: 28,
+                ),
+                _buildDottedLine(),
+              ],
+            ),
           ),
           SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  amount,
-                  style: TextStyle(
-                    color: isCompleted ? Colors.green : Colors.blue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: amount,
+                        style: TextStyle(
+                          color: isSpecialAmount
+                              ? Colors.orange
+                              : (isCompleted ? Colors.green : Colors.blue),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      if (isSpecialAmount)
+                        TextSpan(
+                          text: " +2000",
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
                 Text(
@@ -147,22 +176,23 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
 
   Widget _buildDottedLine() {
     return Container(
-      width: 1,
-      height: 100,
+      width: 2, // Width of the dotted line
+      height: 40, // Height of the dotted line
       child: CustomPaint(
-        painter: DottedLinePainter(),
+        painter: DottedLinePainter(), // Reference the CustomPainter here
       ),
     );
   }
 }
 
+// Custom painter for dotted line
 class DottedLinePainter extends CustomPainter {
   final double dashWidth;
   final double dashSpace;
   final Color color;
 
   DottedLinePainter({
-    this.dashWidth = 5,
+    this.dashWidth = 10,
     this.dashSpace = 5,
     this.color = Colors.grey,
   });
@@ -171,12 +201,12 @@ class DottedLinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = color
-      ..strokeWidth = 2;
+      ..strokeWidth = 1;
 
-    double startX = 0;
-    while (startX < size.height) {
-      canvas.drawLine(Offset(0, startX), Offset(0, startX + dashWidth), paint);
-      startX += dashWidth + dashSpace;
+    double startY = 0; // For vertical dotted line, use Y-axis
+    while (startY < size.height) {
+      canvas.drawLine(Offset(0, startY), Offset(0, startY + dashWidth), paint);
+      startY += dashWidth + dashSpace;
     }
   }
 
