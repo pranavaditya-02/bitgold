@@ -52,7 +52,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.push(
                 context,

@@ -1,3 +1,4 @@
+import 'package:bitgold/User/seacrh_user.dart';
 import 'package:flutter/material.dart';
 import 'Home/Home.dart';
 import 'Tracker/tracker_main.dart';
@@ -23,13 +24,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   HomePage()), // Replace with your Home widget
         );
         break;
-      // case 1:
-      //   // Navigate to Add User
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => AddUserPage()), // Replace with your Add User widget
-      //   );
-      //   break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  SearchUserScreen()), // Replace with your Add User widget
+        );
+        break;
       case 2:
         // Navigate to Tracker
         Navigator.push(
@@ -58,7 +60,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person_add),
-          label: 'Add User',
+          label: 'User',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.track_changes),

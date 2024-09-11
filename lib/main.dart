@@ -1,3 +1,4 @@
+import 'package:bitgold/Tracker/gold_loan_details.dart';
 import 'package:flutter/material.dart';
 import 'Home/Home.dart';
 

@@ -12,7 +12,7 @@ class GoldLoanDetails extends StatelessWidget {
         surfaceTintColor: Color.fromARGB(255, 250, 250, 250),
         title: Text('Gold Loan Details'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -33,7 +33,7 @@ class GoldLoanDetails extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
         child: ListView.builder(
           itemCount: 4, // The number of loan cards you want to display
           itemBuilder: (context, index) {
@@ -112,13 +112,13 @@ class LoanCard extends StatelessWidget {
       },
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(vertical: 8.0),
+        margin: EdgeInsets.symmetric(vertical: 16.0),
         elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Row(
@@ -136,26 +136,14 @@ class LoanCard extends StatelessWidget {
                       Text(
                         loanAmount,
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.amber[800],
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Text(
-                            '$completedMonths / $totalMonths Month',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
-                  Spacer(),
+                  // Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -179,22 +167,28 @@ class LoanCard extends StatelessWidget {
                       Text(
                         'Due : $dueDate',
                         style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '$completedMonths / $totalMonths Month',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-              SizedBox(height: 12),
               CustomProgressSlider(
                 progress: progress,
                 loanStatus: loanStatus,
                 activeColor: _getProgressColor(),
                 inactiveColor: Colors.grey.shade200,
               ),
-              SizedBox(height: 14),
               Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
@@ -285,6 +279,7 @@ class CustomProgressSlider extends StatelessWidget {
       children: [
         // Slider
         Container(
+          height: 60,
           width: sliderWidth,
           child: SliderTheme(
             data: SliderThemeData(
@@ -307,9 +302,9 @@ class CustomProgressSlider extends StatelessWidget {
         // Percentage label
         Positioned(
           left: labelPosition,
-          bottom: sliderHeight + labelOffset,
+          bottom: 40,
+          // bottom: sliderHeight + labelOffset,
           child: Container(
-            padding: EdgeInsets.all(6),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),

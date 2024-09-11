@@ -16,7 +16,7 @@ class TrackerMainScreen extends StatelessWidget {
         title: Text('Tracker'),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.push(
               context,

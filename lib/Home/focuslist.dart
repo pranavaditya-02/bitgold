@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Home/Home.dart';
 
 class ViewAllScreen extends StatefulWidget {
   @override
@@ -25,6 +26,15 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
         backgroundColor: Color(0xFFFAFAFA),
         title: Text('In Focus List'),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),

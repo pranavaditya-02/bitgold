@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bitgold/Custombottomnavigation.dart';
 
 class TransactionDetailsScreen extends StatefulWidget {
   @override
@@ -20,6 +21,12 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -41,25 +48,28 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             children: [
               _buildStep("₹ 8,000", "No Transaction Done", "May 12th 2024",
                   isCompleted: false),
-              _buildDottedLine(),
               _buildStep("₹ 10,000", "No Transaction Done", "Apr 12th 2024",
                   isCompleted: false, isSpecialAmount: true),
-              _buildDottedLine(),
               _buildStep(
                   "₹ 10,000", "Transaction from SBI Account", "Mar 12th 2024",
                   isCompleted: true),
-              _buildDottedLine(),
               _buildStep(
                   "₹ 10,000", "Transaction from SBI Account", "Feb 12th 2024",
                   isCompleted: true),
-              _buildDottedLine(),
               _buildStep(
                   "₹ 10,000", "Transaction from SBI Account", "Jan 12th 2024",
-                  isCompleted: true),
+                  isCompleted: true, bottom: true),
             ],
           ),
         ],
       ),
+      // Bottom Navigation Bar added here
+      bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: 2,
+          onTap: (index) {
+            // Handle navigation bar item taps
+            switch (index) {}
+          }),
     );
   }
 
@@ -67,7 +77,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   Widget _buildAmountCard(
       String title, String amount, IconData icon, Color iconColor) {
     return Container(
-      width: 150,
+      width: 160, // Increase the width here
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -80,20 +90,29 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           )
         ],
       ),
-      child: Column(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Icon section on the left
           CircleAvatar(
             backgroundColor: Colors.grey.shade200,
             child: Icon(icon, size: 30, color: iconColor),
           ),
-          SizedBox(height: 8),
-          Text(
-            title,
-            style: TextStyle(color: Colors.grey, fontSize: 14),
-          ),
-          Text(
-            amount,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          SizedBox(width: 8), // Space between icon and text
+          // Text section on the right
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(color: Colors.grey, fontSize: 14),
+              ),
+              SizedBox(height: 4), // Small space between title and amount
+              Text(
+                amount,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
         ],
       ),
@@ -101,10 +120,16 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   }
 
   // Updated steps for the transaction details
-  Widget _buildStep(String amount, String status, String date,
-      {bool isCompleted = false, bool isSpecialAmount = false}) {
+  Widget _buildStep(
+    String amount,
+    String status,
+    String date, {
+    bool isCompleted = false,
+    bool isSpecialAmount = false,
+    bool bottom = false,
+  }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -121,7 +146,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                   color: isCompleted ? Colors.green : Colors.blue,
                   size: 28,
                 ),
-                _buildDottedLine(),
+                bottom ? Container() : _buildDottedLine(),
               ],
             ),
           ),
@@ -177,7 +202,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   Widget _buildDottedLine() {
     return Container(
       width: 2, // Width of the dotted line
-      height: 40, // Height of the dotted line
+      height: 55, // Height of the dotted line
       child: CustomPaint(
         painter: DottedLinePainter(), // Reference the CustomPainter here
       ),
