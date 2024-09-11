@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Tracker/gold_loan_details.dart';
 
 class TrackDetailScreen extends StatelessWidget {
   @override
@@ -36,7 +37,7 @@ class TrackDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20), // Space for top padding
+              SizedBox(height: 15), // Space for top padding
               Stack(
                 clipBehavior: Clip.none, // Allow overflow for the profile image
                 children: [
@@ -101,7 +102,7 @@ class TrackDetailScreen extends StatelessWidget {
                           width: 1,
                           height: 170,
                           margin: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 15),
+                              horizontal: 10, vertical: 12),
                           color: Colors.grey[300],
                         ),
                         // Right section (Loan summary)
@@ -129,16 +130,86 @@ class TrackDetailScreen extends StatelessWidget {
                                           'Silver loan Overdue', Colors.red),
                                     ],
                                   ),
+
                                   // Positioned ID number at the top right
                                   Positioned(
                                     top: 10,
-                                    right: 0,
+                                    right: -4,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        '00000017738',
-                                        style: TextStyle(
-                                            color: Colors.grey, fontSize: 16),
+                                      child: Container(
+                                        padding: EdgeInsets.zero,
+                                        width:
+                                            140, // Reduced width to fit the content properly
+                                        height: 40, // Adjusted height as needed
+                                        child: OutlinedButton(
+                                          onPressed: () {
+                                            
+                                            // Add your button press logic here
+                                          },
+                                          style: OutlinedButton.styleFrom(
+                                            side: BorderSide(
+                                              color: Colors
+                                                  .yellow, // Border color similar to the image
+                                              width: 2, // Border width
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      10), // Rounded corners
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    4), // Reduced button padding
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .start, // Align text and icon to the start
+                                            children: [
+                                              Flexible(
+                                                child: FittedBox(
+                                                  fit: BoxFit
+                                                      .scaleDown, // Scale down the text to fit the container
+                                                  child: Text(
+                                                    'Create New Loan',
+                                                    style: TextStyle(
+                                                      color: Colors
+                                                          .brown, // Text color
+                                                      fontSize:
+                                                          14, // Increased font size
+                                                    ),
+                                                    overflow: TextOverflow
+                                                        .ellipsis, // Avoid text overflow
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  width:
+                                                      4), // Reduced space between text and icon
+                                              Container(
+                                                width:
+                                                    20, // Adjusted size of the icon container
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  color: Colors
+                                                      .brown, // Background color for the icon
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8), // Rounded box for the icon
+                                                ),
+                                                child: Center(
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    color: Colors
+                                                        .white, // Icon color
+                                                    size:
+                                                        14, // Slightly reduced icon size
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -153,7 +224,7 @@ class TrackDetailScreen extends StatelessWidget {
                   // Profile Image (Overlapping circle avatar)
                   Positioned(
                     left: 40, // Align left with the card
-                    top: -30, // Slight overlap
+                    top: -25, // Slight overlap
                     child: CircleAvatar(
                       radius: 40,
                       backgroundImage: NetworkImage(
@@ -168,6 +239,7 @@ class TrackDetailScreen extends StatelessWidget {
 
               // Additional sections for other loan details...
               _buildLoanCard(
+                context,
                 'Gold Loan',
                 '₹75,000',
                 '24 Month Tenure',
@@ -176,6 +248,7 @@ class TrackDetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
               _buildLoanCard(
+                context,
                 'Silver Loan',
                 '₹1,75,000',
                 '18 Month Tenure',
@@ -233,23 +306,26 @@ class TrackDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoanCard(String loanType, String amount, String tenure,
-      String dueDate, String imagePath) {
+  Widget _buildLoanCard(BuildContext context, String loanType, String amount,
+      String tenure, String dueDate, String imagePath) {
     // Determine color based on loan type
     Color topBackgroundColor;
+    Color textColor; // To set the text color based on the loan type
     if (loanType.toLowerCase() == 'gold loan') {
       topBackgroundColor = Color.fromARGB(255, 241, 204, 198); // Gold color
+      textColor = Color.fromARGB(255, 185, 54, 34); // Gold text color
       imagePath = 'assets/goldloan.png'; // Gold-specific image
     } else if (loanType.toLowerCase() == 'silver loan') {
       topBackgroundColor = Color.fromARGB(255, 255, 202, 223); // Silver color
+      textColor = Color.fromARGB(255, 181, 65, 111); // Silver text color
       imagePath = 'assets/silverloan.png'; // Silver-specific image
     } else {
       topBackgroundColor = Color(0xFFF7E0DC); // Default light pink color
+      textColor = Colors.black; // Default text color
       imagePath = imagePath; // Use passed image path
     }
 
     return Container(
-      // Adds margin around the card
       margin: EdgeInsets.all(0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -287,13 +363,15 @@ class TrackDetailScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFFD74628), // Red text color
+                        color:
+                            textColor, // Dynamic text color based on loan type
                       ),
                     ),
                     SizedBox(height: 20),
                     Text(
                       'Current Active Plan',
-                      style: TextStyle(color: Colors.grey),
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 99, 125, 146)),
                     ),
                     SizedBox(height: 4),
                     Text(
@@ -301,11 +379,13 @@ class TrackDetailScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 24, // Larger font for the amount
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: textColor, // Dynamic text color for amount
                       ),
                     ),
                     SizedBox(height: 4),
-                    Text(tenure),
+                    Text(tenure,
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 99, 125, 146))),
                   ],
                 ),
                 Spacer(), // Pushes the image to the right
@@ -320,7 +400,7 @@ class TrackDetailScreen extends StatelessWidget {
           ),
           // Lower section (white background)
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -345,30 +425,42 @@ class TrackDetailScreen extends StatelessWidget {
                       .scaleDown, // Ensures the button scales to fit within the available space
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, // Button color
+                      backgroundColor:
+                          Color.fromARGB(255, 172, 82, 68), // Button color
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // Rounded edges
+                        borderRadius:
+                            BorderRadius.circular(15), // Rounded edges
                       ),
-                      side: BorderSide(
-                          color: Colors.grey), // Border for the button
                       padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12), // Adjust padding to control size
+                          horizontal: 10,
+                          vertical: 8), // Adjust padding to control size
                       minimumSize:
-                          Size(100, 40), // Minimum size (width and height)
+                          Size(60, 40), // Minimum size (width and height)
                     ),
                     onPressed: () {
-                      // Handle view all loans
+                      // Navigate based on loan type
+                      if (loanType.toLowerCase() == 'gold loan') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                GoldLoanDetails(), // Your gold loan details page
+                          ),
+                        );
+                      } else {
+                        // Handle other types of loans here
+                      }
                     },
                     child: Text(
                       'View All loans >',
                       style: TextStyle(
-                        color: Colors.black, // Button text color
+                        color: const Color.fromARGB(
+                            255, 255, 255, 255), // Button text color
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

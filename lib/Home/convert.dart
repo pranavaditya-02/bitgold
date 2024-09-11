@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
-import 'package:bitgold/Tracker/trackermain.dart';
 import 'package:bitgold/Custombottomnavigation.dart';
 
 void main() {

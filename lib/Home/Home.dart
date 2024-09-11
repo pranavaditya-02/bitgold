@@ -4,7 +4,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'convert.dart';
 import 'focuslist.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:bitgold/Tracker/trackermain.dart';
 import 'package:bitgold/Custombottomnavigation.dart';
 
 void main() {
