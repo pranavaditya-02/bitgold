@@ -238,7 +238,12 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                         ),
                                       );
                                     },
-                                    child: Text("View"),
+                                    child: Text(
+                                      "View",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 0, 123, 255)),
+                                    ),
                                   ),
                                 ),
                               );

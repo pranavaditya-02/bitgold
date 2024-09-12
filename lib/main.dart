@@ -110,9 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(25),
                         ),
-                        backgroundColor: Colors.blueGrey[200],
+                        backgroundColor: Color.fromARGB(255, 170, 185, 197),
                       ),
                       child: Text(
                         'Confirm',
