@@ -17,7 +17,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
         surfaceTintColor: Color.fromARGB(255, 250, 250, 250),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+          icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -29,7 +29,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.settings, color: Colors.grey),
+            icon: Icon(Icons.settings),
             onPressed: () {
               // Handle settings button
             },

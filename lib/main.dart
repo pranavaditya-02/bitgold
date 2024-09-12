@@ -1,6 +1,6 @@
-import 'package:bitgold/Tracker/gold_loan_details.dart';
+import 'package:bitgold/Home/Home.dart';
 import 'package:flutter/material.dart';
-import 'Home/Home.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 void main() {
   runApp(BitgoldApp());
@@ -16,145 +16,118 @@ class BitgoldApp extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool isKeyboardVisible = false;
+
   @override
   Widget build(BuildContext context) {
+    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+    isKeyboardVisible = keyboardHeight > 0; // True if the keyboard is open
+
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFDBBC58), Color(0xFFF3D78E)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xFFFAFAFA),
+        elevation: 0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo.png', // Path to your logo in the assets folder
+              height: 50,
+            ),
+            const SizedBox(width: 8),
+            const Text(
+              'BITGOLD',
+              style: TextStyle(
+                color: Color(0xFFDBBC58),
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // Placeholder for your 3D styled shapes
-              // You can use images or custom drawing for the 3D shapes.
-              SizedBox(height: 20),
-              Text(
-                'Welcome back,',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              Text(
-                'Sign in to continue',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black54,
-                ),
-              ),
-              SizedBox(height: 30),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.white),
-                  prefixIcon: Icon(
-                    Icons.email_outlined,
-                    color: Colors.white70,
-                    shadows: [
-                      Shadow(
-                        offset: Offset(1, 1),
-                        blurRadius: 2,
-                        color: Colors.grey,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 0),
+
+                  // Central Image with dynamic height adjustment based on keyboard visibility
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    height: isKeyboardVisible
+                        ? 200
+                        : 300, // Reduce image size when keyboard is open
+                    child: Image.asset(
+                      'assets/login1.jpg', // Replace with your actual image
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Pin Code Fields
+                  PinCodeTextField(
+                    appContext: context,
+                    length: 6,
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {},
+                    pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.circle,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 60,
+                      fieldWidth: 50,
+                      activeColor: Colors.blueGrey,
+                      inactiveColor: Colors.blueGrey,
+                      selectedColor: Colors.blue,
+                    ),
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // Confirm Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: Colors.blueGrey[200],
                       ),
-                    ],
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.white, width: 2),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.white),
-                  prefixIcon: Icon(
-                    Icons.lock_outline,
-                    color: Colors.white70,
-                    shadows: [
-                      Shadow(
-                        offset: Offset(1, 1),
-                        blurRadius: 2,
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.white, width: 2),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(color: Colors.black54),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFDBBC58), // Button color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Sign In',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
+                      child: Text(
+                        'Confirm',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 10),
-                    Icon(Icons.arrow_forward, color: Colors.white),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(height: 20),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Don't have an account? Register",
-                  style: TextStyle(color: Colors.black87),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

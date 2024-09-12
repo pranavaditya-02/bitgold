@@ -38,16 +38,25 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-         backgroundColor: Color.fromARGB(255, 250, 250, 250),
+        backgroundColor: Color.fromARGB(255, 250, 250, 250),
         surfaceTintColor: Color.fromARGB(255, 250, 250, 250),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
+            if (isSearched) {
+              // Reset the state to go back to the initial form and image
+              setState(() {
+                isSearched = false;
+                users = [];
+              });
+            } else {
+              // If not searched, pop the screen and go back
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            }
           },
         ),
         title: Text(
@@ -75,8 +84,9 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                   if (!isSearched) // Show image only before search
                     Center(
                       child: Image.asset(
-                        'assets/pana.png',
-                        height: 150,
+                        'assets/search.jpg',
+                        height: 250,
+                        width: 250,
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -180,8 +190,9 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                             itemBuilder: (context, index) {
                               return Container(
                                 margin: const EdgeInsets.symmetric(
-                                    vertical:
-                                        8.0), // Adds some spacing between list items
+                                    vertical: 7.0,
+                                    horizontal:
+                                        4), // Adds some spacing between list items
                                 decoration: BoxDecoration(
                                   color: Colors
                                       .white, // Background color of the box
@@ -203,7 +214,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                 ),
                                 child: ListTile(
                                   contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 8.0, vertical: 8),
+                                      horizontal: 6.0, vertical: 6),
                                   leading: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 6, vertical: 0),
