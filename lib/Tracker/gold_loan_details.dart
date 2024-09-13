@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 import 'package:bitgold/Tracker/transaction_details.dart'; // Make sure this import is correct
 
 class GoldLoanDetails extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 import 'package:bitgold/Loan/create_loan.dart';
 
 class CreateUserScreen extends StatefulWidget {

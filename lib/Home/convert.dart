@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 
 void main() {
   runApp(MyApp());

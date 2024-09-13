@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 import 'package:bitgold/Home/Home.dart';
 import 'package:bitgold/Tracker/track_details.dart';
 import 'create_user.dart';

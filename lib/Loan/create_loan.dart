@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 import 'package:bitgold/Tracker/track_details.dart'; // Assuming CustomBottomNavigationBar is defined elsewhere
 
 class CreateLoanScreen extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:bitgold/Home/Home.dart';
 import 'package:draggable_bottom_sheet/draggable_bottom_sheet.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:bitgold/Tracker/track_details.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 
 class TrackerMainScreen extends StatelessWidget {
   @override

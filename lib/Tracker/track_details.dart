@@ -1,6 +1,6 @@
 import 'package:bitgold/Loan/create_loan.dart';
 import 'package:flutter/material.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 import 'package:bitgold/Tracker/gold_loan_details.dart';
 
 class TrackDetailScreen extends StatelessWidget {

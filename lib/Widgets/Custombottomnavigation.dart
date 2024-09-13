@@ -1,7 +1,7 @@
 import 'package:bitgold/User/seacrh_user.dart';
 import 'package:flutter/material.dart';
-import 'Home/Home.dart';
-import 'Tracker/tracker_main.dart';
+import '../Home/Home.dart';
+import '../Tracker/tracker_main.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;

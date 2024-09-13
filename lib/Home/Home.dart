@@ -4,7 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'convert.dart';
 import 'focuslist.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 import 'package:bitgold/setting.dart';
 
 class HomePage extends StatefulWidget {

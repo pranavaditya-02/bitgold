@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bitgold/Custombottomnavigation.dart';
+import 'package:bitgold/Widgets/Custombottomnavigation.dart';
 
 class TransactionDetailsScreen extends StatefulWidget {
   @override
