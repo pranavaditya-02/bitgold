@@ -50,20 +50,16 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                   isCompleted: false),
               _buildStep("₹ 10,000", "No Transaction Done", "Apr 12th 2024",
                   isCompleted: false, isSpecialAmount: true),
-              _buildStep(
-                  "₹ 10,000", "Transaction from SBI Account", "Mar 12th 2024",
+              _buildStep("₹ 10,000", "Transaction Done", "Mar 12th 2024",
                   isCompleted: true),
-              _buildStep(
-                  "₹ 10,000", "Transaction from SBI Account", "Feb 12th 2024",
+              _buildStep("₹ 10,000", "Transaction Done", "Feb 12th 2024",
                   isCompleted: true),
-              _buildStep(
-                  "₹ 10,000", "Transaction from SBI Account", "Jan 12th 2024",
+              _buildStep("₹ 10,000", "Transaction Done", "Jan 12th 2024",
                   isCompleted: true, bottom: true),
             ],
           ),
         ],
       ),
-      // Bottom Navigation Bar added here
       bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: 2,
           onTap: (index) {
