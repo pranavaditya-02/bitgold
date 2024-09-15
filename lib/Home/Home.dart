@@ -577,8 +577,60 @@ class _HomePageState extends State<HomePage> {
         children: [
           SlidableAction(
             onPressed: (context) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Paid action')),
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Confirm Payment'),
+                    content: Text('Do you want to confirm this payment?'),
+                    actions: [
+                      // Circle with Check Mark
+
+                      // Space between the two icons
+                      // Circle with Cross Mark
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red, // Background color
+                          ),
+                          padding:
+                              EdgeInsets.all(12), // Space inside the circle
+                          child: Icon(
+                            CupertinoIcons.clear,
+                            color: Colors.white, // Icon color
+                            size: 24, // Icon size
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 120),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Payment Confirmed')),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.green, // Background color
+                          ),
+                          padding:
+                              EdgeInsets.all(12), // Space inside the circle
+                          child: Icon(
+                            CupertinoIcons.check_mark,
+                            color: Colors.white, // Icon color
+                            size: 24, // Icon size
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               );
             },
             backgroundColor: Colors.green,
@@ -701,13 +753,101 @@ class _HomePageState extends State<HomePage> {
           ),
           SlidableAction(
             onPressed: (context) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Due action')),
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  DateTime? selectedDate; // Variable to store selected date
+                  return AlertDialog(
+                    title: Text('Select Due Date'),
+                    content: StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2101),
+                                );
+                                if (pickedDate != null &&
+                                    pickedDate != selectedDate) {
+                                  setState(() {
+                                    selectedDate = pickedDate;
+                                  });
+                                }
+                              },
+                              child: Text(
+                                selectedDate == null
+                                    ? 'Select Date'
+                                    : 'Date Selected: ${selectedDate!.toLocal().toString().split(' ')[0]}',
+                                style: TextStyle(
+                                    color: const Color.fromARGB(255, 0, 0, 0)),
+                              ),
+                            ),
+                            SizedBox(
+                                height:
+                                    16), // Space between button and selected date
+                          ],
+                        );
+                      },
+                    ),
+                    actions: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pop(); // Close the dialog on Cancel
+                            },
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              side: const BorderSide(
+                                  color: Colors.amber,
+                                  width: 2), // Golden outline
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8), // Border radius
+                              ),
+                            ),
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(fontFamily: 'OpenSans'),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle save action here
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.amber, // Background color
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8), // Border radius
+                              ),
+                            ),
+                            child: const Text(
+                              'Confirm',
+                              style: TextStyle(fontFamily: 'OpenSans'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
               );
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
-            icon: Icons.access_time, // Using a clock icon for "Due"
+            icon: Icons.access_time,
             label: 'Due',
           ),
         ],
