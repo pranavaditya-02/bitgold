@@ -1,4 +1,4 @@
-import 'package:bitgold/main.dart';
+import 'package:bitgold/main.dart'; // Ensure this is the correct import for your app
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -22,18 +22,13 @@ class SettingsScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.settings, color: Colors.black),
             onPressed: () {
-              // Navigate to another screen
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => SettingsDetailsScreen()),
-              // );
+              // Navigate to another screen if needed
             },
           ),
-          SizedBox(width: 16), // Spacing between icon and edge
+          SizedBox(width: 16),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +47,7 @@ class SettingsScreen extends StatelessWidget {
                     CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage(
-                          'assets/profile.png'), // Replace with your asset image
+                          'assets/profile.png'), // Ensure the image exists
                     ),
                     SizedBox(width: 16),
                     Column(
@@ -112,10 +107,10 @@ class SettingsScreen extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                hintText: '80%',
               ),
             ),
-            SizedBox(height: 330),
+            SizedBox(
+                height: 300), // Adjusted height to make space for support card
 
             // Support Section inside a Card
             GestureDetector(
@@ -141,16 +136,16 @@ class SettingsScreen extends StatelessWidget {
                           color: Colors.blue,
                         ),
                       ),
-                      Spacer(), // Pushes the arrow to the right
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.grey), // Right arrow
+                      Spacer(),
+                      Icon(Icons.arrow_forward_ios, color: Colors.grey),
                     ],
                   ),
                 ),
               ),
             ),
 
-            Spacer(),
+            SizedBox(
+                height: 30), // Ensure there's space before the logout button
 
             // Logout Button
             Center(
@@ -158,23 +153,22 @@ class SettingsScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(
-                        255, 255, 255, 255), // Background color
+                    backgroundColor: Colors.white, // Background color
                     padding: EdgeInsets.symmetric(vertical: 16),
                     side: BorderSide(
-                      color: const Color.fromARGB(
-                          255, 192, 55, 69), // Border color
-                      width: 2, // Border width
+                      color: Color.fromARGB(255, 192, 55, 69), // Border color
+                      width: 2,
                     ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          10), // Rounded corners (optional)
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              LoginScreen()), // Ensure LoginScreen is defined
                     );
                   },
                   child: Text(
